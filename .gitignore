@@ -1,0 +1,17 @@
+# Rust build output
+/target/
+
+# Local build artifacts and test fixtures (third-party binaries)
+/dist/
+/test/
+*.exe
+*.jar
+*.zip
+*.dll
+*.pdb
+*.bin
+
+# Editor / OS noise
+.DS_Store
+.idea/
+.vscode/

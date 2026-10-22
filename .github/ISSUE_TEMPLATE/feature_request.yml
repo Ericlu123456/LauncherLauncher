@@ -1,0 +1,40 @@
+name: 功能建议
+description: 提议界面、命令行或规则引擎的改进。
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 现在的问题
+      description: 目前哪里不方便或缺失？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+      description: 你希望变成什么样？
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: 范围
+      options:
+        - 界面 / 可访问性
+        - 启动器识别
+        - Java 改写
+        - .NET 改写
+        - 备份 / 恢复
+        - 命令行
+        - 文档
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 这个请求不要求分发游戏文件或绕过网络服务。
+          required: true

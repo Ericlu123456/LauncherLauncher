@@ -1,0 +1,32 @@
+#pragma code_page(65001)
+1 24 "assets/launcherlauncher.manifest"
+
+1 VERSIONINFO
+FILEVERSION 0,1,0,0
+PRODUCTVERSION 0,1,0,0
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS 0x40004L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904b0"
+    BEGIN
+      VALUE "CompanyName", "LauncherLauncher contributors"
+      VALUE "FileDescription", "LauncherLauncher - local launcher patcher"
+      VALUE "FileVersion", "0.1.0.0"
+      VALUE "InternalName", "launcherlauncher"
+      VALUE "LegalCopyright", "MIT License"
+      VALUE "OriginalFilename", "launcherlauncher.exe"
+      VALUE "ProductName", "LauncherLauncher"
+      VALUE "ProductVersion", "0.1.0.0"
+      VALUE "Comments", "Local, offline launcher patcher; no network bypass."
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1200
+  END
+END

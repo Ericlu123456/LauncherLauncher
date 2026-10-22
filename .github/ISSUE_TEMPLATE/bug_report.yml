@@ -1,0 +1,82 @@
+name: Bug 报告
+description: 工具没有按预期工作。
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请不要上传启动器本体、游戏文件、账号数据，或任何你无权分享的内容。
+  - type: dropdown
+    id: launcher
+    attributes:
+      label: 启动器
+      options:
+        - PCL2
+        - PCL2-CE
+        - HMCL
+        - 其他 / 不在列表
+    validations:
+      required: true
+  - type: input
+    id: launcher_version
+    attributes:
+      label: 启动器版本
+      placeholder: 例如 2.15.1.0 / 3.17.SNAPSHOT
+    validations:
+      required: true
+  - type: input
+    id: tool_version
+    attributes:
+      label: 工具版本与构建
+      placeholder: 例如 v0.1.0 Windows x64 / commit
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: 系统与显示缩放
+      placeholder: 例如 Windows 11 23H2，125%；或 Arch Linux Wayland
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 选择 ...
+        2. 点击 ...
+        3. 看到 ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为 / 实际行为
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: 输出 / 日志
+      description: 粘贴相关控制台输出或界面日志；如有个人路径请先去掉。
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: rules
+    attributes:
+      label: 自定义规则（如有）
+      description: 只贴你添加的 JSON；不要附启动器本体。
+      render: json
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 我有权修改涉及的文件，且没有上传受版权保护的启动器。
+          required: true
+        - label: 我已从日志中移除个人路径、令牌和账号数据。
+          required: true

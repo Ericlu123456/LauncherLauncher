@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用说明
+    url: https://github.com/Ericlu123456/LauncherLauncher/blob/main/README.md
+    about: 支持范围、构建和使用说明。
+  - name: 安全 / 私密报告
+    url: https://github.com/Ericlu123456/LauncherLauncher/security/advisories/new
+    about: 涉及安全的问题请走私密报告。
