@@ -145,7 +145,7 @@ impl App {
             shot_done: false,
         };
         app.custom_rules = app.cfg.custom_rules.clone();
-        app.push_log(Level::Info, "LauncherLauncher 0.1.0 // 2026.10.20");
+        app.push_log(Level::Info, "LauncherLauncher 0.1.1 // 2026.10.20");
         app.push_log(Level::Info, "离线运行：不联网、不上传任何数据。");
         app.push_log(Level::Info, "选择启动器，或把文件 / 文件夹拖进窗口。");
         if app.cfg.launcher_path.is_some() {
@@ -578,7 +578,7 @@ impl App {
                         );
                     });
                 ui.add_space(4.0);
-                ui.label(RichText::new("v0.1.0").size(8.5).color(DIM).monospace());
+                ui.label(RichText::new("v0.1.1").size(8.5).color(DIM).monospace());
             });
         });
         ui.add_space(2.0);
@@ -1095,7 +1095,7 @@ impl App {
             .show(ctx, |ui| {
                 ui.set_width(390.0);
                 ui.label(
-                    RichText::new("LAUNCHER LAUNCHER // v0.1.0")
+                    RichText::new("LAUNCHER LAUNCHER // v0.1.1")
                         .size(10.0)
                         .color(NEON)
                         .monospace(),

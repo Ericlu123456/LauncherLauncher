@@ -5,7 +5,7 @@ use crate::patch::{self, Report, Rule, profiles};
 use crate::paths;
 use crate::target::Target;
 use crate::util;
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail};
 use std::fs;
 use std::path::Path;
 use std::process::{Command, Stdio};
@@ -82,10 +82,57 @@ pub struct HackOutcome {
     pub pid: Option<u32>,
 }
 
+/// PCL2 2.99.0.1 removed the download entries upstream. We keep the
+/// well-tested 2.99.0.0 line and refuse newer builds instead of pretending
+/// that a loader-only patch restores the page.
+fn parse_version(version: &str) -> Option<(u64, u64, u64, u64)> {
+    let core = version
+        .trim()
+        .trim_start_matches(['v', 'V'])
+        .split(['-', '+'])
+        .next()?
+        .trim();
+    let mut out = [0u64; 4];
+    let mut count = 0usize;
+    for part in core.split('.') {
+        if part.is_empty() {
+            break;
+        }
+        out[count] = part.parse().ok()?;
+        count += 1;
+        if count == 4 {
+            break;
+        }
+    }
+    if count == 0 {
+        None
+    } else {
+        Some((out[0], out[1], out[2], out[3]))
+    }
+}
+
+fn ensure_supported(target: &Target) -> Result<()> {
+    if target.label != "PCL2" {
+        return Ok(());
+    }
+    match parse_version(&target.version) {
+        Some(v) if v <= (2, 99, 0, 0) => Ok(()),
+        Some(_) => bail!(
+            "PCL2 {} 暂不支持：上游 2.99.0.1 起已移除下载入口；本项目只支持 2.99.0.0 及以下。",
+            target.version
+        ),
+        None => bail!(
+            "无法识别 PCL2 版本（{}）；为避免误改，只支持 2.99.0.0 及以下。",
+            target.version
+        ),
+    }
+}
+
 pub fn hack(path: &Path, opts: &HackOptions, log: &mut dyn FnMut(LogLine)) -> Result<HackOutcome> {
     paths::ensure_dirs()?;
     log(LogLine::info("正在识别启动器…"));
     let target = Target::detect(path)?;
+    ensure_supported(&target)?;
     log(LogLine::info(format!(
         "识别为 {} {} · {} · {} · {}",
         target.label,
@@ -429,4 +476,19 @@ pub fn restore(entry: &BackupEntry, log: &mut dyn FnMut(LogLine)) -> Result<()> 
         dest.display()
     )));
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::parse_version;
+
+    #[test]
+    fn pcl2_version_boundary() {
+        assert_eq!(parse_version("2.99.0.0"), Some((2, 99, 0, 0)));
+        assert_eq!(parse_version("v2.99.0.1"), Some((2, 99, 0, 1)));
+        assert_eq!(parse_version("2.14.0.0"), Some((2, 14, 0, 0)));
+        assert!(parse_version("2.99.0.1") > Some((2, 99, 0, 0)));
+        assert!(parse_version("2.99.0.0") <= Some((2, 99, 0, 0)));
+        assert_eq!(parse_version("unknown"), None);
+    }
 }
